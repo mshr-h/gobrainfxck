@@ -2,18 +2,23 @@ package brainfxck
 
 import (
 	"fmt"
+	"os"
 	"strings"
 )
 
 type Brainfxck struct {
+	in      *os.File
+	out     *os.File
 	dp      int
 	ip      int
 	memory  []int
 	program string
 }
 
-func LoadProgram(program string) *Brainfxck {
+func LoadProgram(in, out *os.File, program string) *Brainfxck {
 	var bf Brainfxck
+	bf.in = in
+	bf.out = out
 	bf.dp = 0
 	bf.ip = 0
 	bf.memory = make([]int, 256)
@@ -32,7 +37,9 @@ func (bf *Brainfxck) Execute() {
 	case '<':
 		bf.dp--
 	case '.':
-		fmt.Printf("%c", bf.memory[bf.dp])
+		fmt.Fprintf(bf.out, "%c", bf.memory[bf.dp])
+	case ',':
+		fmt.Fscanf(bf.in, "%c", bf.memory[bf.dp])
 	case '[':
 		{
 			if bf.memory[bf.dp] == 0 {
