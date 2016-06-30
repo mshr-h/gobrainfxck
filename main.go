@@ -5,7 +5,8 @@ import (
 )
 
 func main() {
-	var bf = brainfxck.LoadProgram("++++++[>++++++<-]>.")
+	var code = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++." // "Hello World!"
+	var bf = brainfxck.LoadProgram(code)
 	bf.Run()
 	bf.Print()
 }
